@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const NavItem = ({ isExpanded, isActive, organization, onExpand }) => {
     const router = useRouter();
@@ -86,5 +87,16 @@ export const NavItem = ({ isExpanded, isActive, organization, onExpand }) => {
                 ))}
             </AccordionContent>
         </AccordionItem>
+    );
+};
+
+NavItem.Skeleton = function SkeletonNavItem() {
+    return (
+        <div className="flex items-center gap-x-2">
+            <div className="w-7 h-10 relative shrink-0">
+                <Skeleton className="h-full w-full absolute" />
+            </div>
+            <Skeleton className="h-10 w-full" />
+        </div>
     );
 };
