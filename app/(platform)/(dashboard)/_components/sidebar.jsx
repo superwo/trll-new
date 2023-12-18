@@ -5,9 +5,10 @@ import { useLocalStorage } from "usehooks-ts";
 import { useOrganization, useOrganizationList } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Accordion } from "@/components/ui/accordion";
+
+import { NavItem } from "./nav-item";
 
 export const Sidebar = ({ storageKey = "t-sidebar-state" }) => {
     const [expanded, setExpanded] = useLocalStorage(storageKey, {});
@@ -65,7 +66,13 @@ export const Sidebar = ({ storageKey = "t-sidebar-state" }) => {
                 className="space-y-1"
             >
                 {userMemberships.data.map(({ organization }) => (
-                    <p key={organization.id}>{organization.id}</p>
+                    <NavItem
+                        key={organization.id}
+                        isActive={activeOrganization?.id === organization.id}
+                        isExpanded={expanded[organization.id]}
+                        organization={organization}
+                        onExpand={onExpand}
+                    />
                 ))}
             </Accordion>
         </>
