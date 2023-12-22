@@ -1,5 +1,7 @@
 "use client";
 
+import { X } from "lucide-react";
+import { toast } from "sonner";
 import {
     Popover,
     PopoverClose,
@@ -8,12 +10,11 @@ import {
 } from "@/components/ui/popover";
 
 import { useAction } from "@/hooks/use-action";
-import { CreateBoard } from "@/actions/create-board";
+import { createBoard } from "@/actions/create-board";
 import { Button } from "@/components/ui/button";
 
 import { FormInput } from "./form-input";
 import { FormSubmit } from "./form-submit";
-import { X } from "lucide-react";
 
 export const FormPopover = ({
     children,
@@ -21,6 +22,22 @@ export const FormPopover = ({
     align,
     sideOffset = 0,
 }) => {
+    const { execute, fieldErrors } = useAction(createBoard, {
+        onSuccess: (data) => {
+            console.log({ data });
+            toast.success("Board created!");
+        },
+        onError: (error) => {
+            console.log({ error });
+            toast.error(error);
+        },
+    });
+
+    const onSubmit = (formData) => {
+        const title = formData.get("title");
+        execute({ title });
+    };
+
     return (
         <Popover>
             <PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -42,6 +59,17 @@ export const FormPopover = ({
                         <X className="h-4 w-4" />
                     </Button>
                 </PopoverClose>
+                <form action={onSubmit} className="space-y-4">
+                    <div className="space-y-4">
+                        <FormInput
+                            id="title"
+                            label="Board title"
+                            type="text"
+                            errors={fieldErrors}
+                        />
+                    </div>
+                    <FormSubmit className="w-full">Create</FormSubmit>
+                </form>
             </PopoverContent>
         </Popover>
     );
