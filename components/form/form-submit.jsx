@@ -5,7 +5,12 @@ import { useFormStatus } from "react-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-export const FormSubmit = ({ children, disabled, className, variant }) => {
+export const FormSubmit = ({
+    children,
+    disabled,
+    className,
+    variant = "primary",
+}) => {
     const { pending } = useFormStatus();
 
     return (
