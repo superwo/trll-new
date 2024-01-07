@@ -8,7 +8,7 @@ import { useAction } from "@/hooks/use-action";
 import { updateList } from "@/actions/update-list";
 import { FormInput } from "@/components/form/form-input";
 
-// import { ListOptions } from "./list-options";
+import { ListOptions } from "./list-options";
 
 export const ListHeader = ({ data, onAddCard }) => {
     const [title, setTitle] = useState(data.title);
@@ -101,7 +101,7 @@ export const ListHeader = ({ data, onAddCard }) => {
                     {title}
                 </div>
             )}
-            {/* <ListOptions onAddCard={onAddCard} data={data} /> */}
+            <ListOptions onAddCard={onAddCard} data={data} />
         </div>
     );
 };
